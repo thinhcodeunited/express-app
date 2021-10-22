@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+    h1 Register account
+    form(name="register-form", method="post")
+       p
+       label(class="form-label") Username
+       input(name="username", class="form-control")
+       p
+       label(class="form-label") Password
+       input(name="password", type="password", class="form-control")
+       p
+       label(class="form-label") Email
+       input(name="email", class="form-control")
+       p
+       input(value="Submit", type="submit", class="btn btn-primary")

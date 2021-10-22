@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  .navbar
+    .navbar-inner
+      .container-fluid
+        .nav-collapse
+        ul.nav
+         li.active(onclick="move('login')")
+          a(href="#") Login
+         li(onclick="move('register')")
+          a(href="#") Register
+        p.navbar-text.pull-left You are logged in as &#32;
+          a(href="#") GUEST
+        script.
+            function move(goto) {
+                window.location.href=goto;
+            }
