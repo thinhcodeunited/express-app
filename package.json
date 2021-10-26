@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "start-dev": "nodemon bin/www",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -19,5 +20,8 @@
     "morgan": "~1.9.1",
     "pug": "^3.0.2",
     "validator": "^13.6.0"
+  },
+  "devDependencies": {
+    "kill-port": "^1.6.1"
   }
 }

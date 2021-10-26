@@ -1,15 +1,13 @@
 const {mongoose} = require('../../utils/db');
 const {isEmail} = require('validator');
 const bcrypt = require('bcrypt');
-const SALT_WORK_FACTOR = 10;
 
 const UserSchema = new mongoose.Schema({
-    id : mongoose.Types.ObjectId,
+    id : mongoose.Schema.Types.ObjectId,
     username : {
         type : String,
         trim: true,
-        required : true,
-        unique : true
+        required : true
     },
     password : {
         type : String,
@@ -19,9 +17,13 @@ const UserSchema = new mongoose.Schema({
     email : {
         type : String,
         trim : true,
+        required : true,
         validate : [isEmail, 'Invalid email']
     },
-    role : Number,
+    role_id : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Role'
+    },
     createAt : {
         type : Date,
         default : Date.now()
@@ -34,41 +36,46 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.index({updateAt: 1, username: 1})
 
-UserSchema.pre('save', function(next) {
+UserSchema.path('username').validate(async function (username, cb) {
+    const finded = await userModel.find({username : username}).exec();
+    return (typeof finded !== 'undefined' && finded.length === 0);
+}, 'User exists!');
+
+UserSchema.pre('save', async function(next) {
     const user = this;
-    user.updateAt = Date.now();
 
     // only hash the password if it has been modified (or is new)
     if (!user.isModified('password')) return next();
 
     // generate a salt
-    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-        if (err) return next(err);
-
-        // hash the password using our new salt
-        bcrypt.hash(user.password, salt, function(err, hash) {
-            if (err) return next(err);
-            // override the cleartext password with the hashed one
-            user.password = hash;
-            next();
-        });
-    });
+    try {
+        const {salt, newpw} = await userModel.hashpw(this.password, null)
+        user.password = newpw;
+        user.salt = salt;
+        next();
+        // update timeat if it has modified
+        user.updateAt = Date.now();
+    } catch (e) {
+        return next(e);
+    }
 });
 
-UserSchema.statics.createUser = function(username, password, email) {
-    let salt = randomSalt();
-    let hashPassword = hashPw(password, salt);
-    let user = new this({
-        salt: salt,
-        password: hashPassword
-    });
-}
 
-UserSchema.methods.comparePassword = function(candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-        if (err) return cb(err);
-        cb(null, isMatch);
-    });
+UserSchema.statics.hashpw = async function(password, salt) {
+    try {
+        if (!salt) {
+            const salt = await bcrypt.genSalt(6);
+        }
+        const newpw = await bcrypt.hash(password, salt);
+        return {salt : salt, newpw : newpw};
+    } catch (e) {
+        return e;
+    }
 };
 
-module.exports = mongoose.model('User', UserSchema);
+UserSchema.statics.comparepw = async function(password, hashed) {
+    return await bcrypt.compare(password, hashed);
+}
+
+const userModel = mongoose.model('User', UserSchema);
+module.exports = userModel;

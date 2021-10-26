@@ -1,19 +1,19 @@
 const userSchema = require('../model/schema/user');
+const roleSchema = require('../model/schema/role');
 
 const userModel = {
     get : async (obj) => {
         try {
-            const list = await userSchema.find(obj).exec();
-            return list;
+            return await userSchema.find(obj).populate('role_id').exec();
         } catch (e) {
             throw e;
         }
     },
-    save : async (obj) => {
-        let user = new userSchema(obj);
+    register : async (obj) => {
+        const role = await roleSchema.find().exec();
+        const user = new userSchema({...obj, role_id : role[1]._id});
         try {
-            await user.save();
-            return true;
+            return await user.save();
         } catch (e) {
             return e;
         }
@@ -21,6 +21,14 @@ const userModel = {
     update : async (filter, update) => {
         try {
             await userSchema.updateOne(filter, update);
+        } catch (e) {
+            throw e;
+        }
+    },
+
+    compareHashpw : async (pass, hashed) => {
+        try {
+            return await userSchema.comparepw(pass, hashed);
         } catch (e) {
             throw e;
         }

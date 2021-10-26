@@ -1,6 +1,7 @@
 extends ../layout
 
 block content
-    h1 Hello Thinh
-    p You are logged in as
+    h1 Hello #{username}
+    p Your email is #{email}
+    p You are logged in as #{role_name}
     a(href="#") Log out

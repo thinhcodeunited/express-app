@@ -1,25 +1,15 @@
-const {body, validationResult} = require('express-validator');
-const {connectDB} = require('../utils/db');
-const hash = require('../bin/hash');
+const userModel = require('../model/userModel');
 
-module.exports = {
-    check : async (req, res, next) => {
-        const query = {
-            username : req.body.username.trim()
-        }
-
-        try {
-            let dbo = await connectDB();
-            const a = await dbo.collection('users').findOne(query);
-            if (!a) {
-                return res.redirect('/login');
-            }
-            if (hash.compare(req.body.password, a.password)) {
-                next();
-            }
-        } catch (err) {
-            console.log(err);
-            return res.redirect('/login');
-        }
-    },
+const auth = async (req, res, next) => {
+    const query = JSON.parse(JSON.stringify(req.body));
+    const doc = await userModel.get({username : query.username});
+    console.log(doc);
+    const result = await userModel.compareHashpw(query.password, doc[0].password);
+    if (!result) {
+        return res.redirect('/login');
+    }
+    req.userinfo = doc;
+    next();
 }
+
+module.exports = {auth};
