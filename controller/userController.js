@@ -12,17 +12,25 @@ module.exports.register = async (req, res) => {
         return res.redirect('/register');
     }
     console.log(reg);
-    res.redirect('/login')
+    req.session.destroy((err) => {
+        res.redirect('/login');
+    })
 }
 
-module.exports.login = (req, res) => {
-    const userinfo = req.userinfo;
+module.exports.login = (req, res) => res.redirect('/userinfo');
+
+module.exports.userinfo = (req, res) => {
     const obj = {
         title : 'User Info',
-        username : userinfo[0].username,
-        email : userinfo[0].email,
-        role : userinfo[0].role_id.role,
-        role_name : userinfo[0].role_id.name
+        username : req.session.Userinfo.username,
+        email : req.session.Userinfo.email,
+        role_name : req.session.Userinfo.role_id.name
     }
-    res.render('user/userinfo', obj)
+    res.render('user/userinfo', obj);
+}
+
+module.exports.logout = (req, res) => {
+    req.session.destroy((err) => {
+        res.redirect('/login');
+    });
 }

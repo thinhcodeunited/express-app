@@ -4,4 +4,5 @@ block content
     h1 Hello #{username}
     p Your email is #{email}
     p You are logged in as #{role_name}
-    a(href="#") Log out
+    form(action="/logout" method="post")#logout-form
+        a(href="javascript:void(0)")(onclick="document.getElementById('logout-form').submit();") Log out

@@ -49,7 +49,7 @@ UserSchema.pre('save', async function(next) {
 
     // generate a salt
     try {
-        const {salt, newpw} = await userModel.hashpw(this.password, null)
+        const {salt, newpw} = await userModel.hashpw(this.password)
         user.password = newpw;
         user.salt = salt;
         next();
@@ -61,11 +61,9 @@ UserSchema.pre('save', async function(next) {
 });
 
 
-UserSchema.statics.hashpw = async function(password, salt) {
+UserSchema.statics.hashpw = async function(password) {
     try {
-        if (!salt) {
-            const salt = await bcrypt.genSalt(6);
-        }
+        const salt = await bcrypt.genSalt(6);
         const newpw = await bcrypt.hash(password, salt);
         return {salt : salt, newpw : newpw};
     } catch (e) {
