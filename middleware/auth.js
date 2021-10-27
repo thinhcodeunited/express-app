@@ -1,6 +1,6 @@
 const userModel = require('../model/userModel');
 
-const auth = async (req, res, next) => {
+const authBeforeLogin = async (req, res, next) => {
     const query = JSON.parse(JSON.stringify(req.body));
     const doc = await userModel.get({username : query.username});
     if (doc.length === 0) {
@@ -29,4 +29,4 @@ const isAuthenticated = (req, res, next) => {
     if (!userss) return res.redirect('/login');
     next();
 }
-module.exports = {auth, isAuthenticated};
+module.exports = {authBeforeLogin, isAuthenticated};

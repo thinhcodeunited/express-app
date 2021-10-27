@@ -22,9 +22,8 @@ module.exports.login = (req, res) => res.redirect('/userinfo');
 module.exports.userinfo = (req, res) => {
     const obj = {
         title : 'User Info',
-        username : req.session.Userinfo.username,
-        email : req.session.Userinfo.email,
-        role_name : req.session.Userinfo.role_id.name
+        ...req.myapp_data,
+        datenow : new Date()
     }
     res.render('user/userinfo', obj);
 }
@@ -33,4 +32,15 @@ module.exports.logout = (req, res) => {
     req.session.destroy((err) => {
         res.redirect('/login');
     });
+}
+
+module.exports.listUsers = async (req, res) => {
+    const users = await userModel.get({});
+    const obj = {
+        title : 'Manage Users',
+        ...req.myapp_data,
+        users : users
+    }
+    console.log(obj);
+    res.render('user/listuser', obj);
 }

@@ -1,8 +1,14 @@
-extends ../layout
+extends dashboard
 
-block content
-    h1 Hello #{username}
-    p Your email is #{email}
-    p You are logged in as #{role_name}
-    form(action="/logout" method="post")#logout-form
-        a(href="javascript:void(0)")(onclick="document.getElementById('logout-form').submit();") Log out
+block dashboard
+    h2 Dashboard
+    p Now time is #{datenow}
+        ul.nav.nav-pills.flex-column
+            if capability.manage_user
+                li.nav-item
+                    a.nav-link(href="/user/list") Manage Users
+            li.nav-item
+                a.nav-link(href="/post/list") Manage Posts
+            if capability.manage_user
+                li.nav-item
+                    a.nav-link(href="#") Something 3

@@ -1,0 +1,21 @@
+extends ../layout
+block content
+    .bg-primary.text-white.text-center
+        h1 Hello #{username}
+    .container.mt-5
+        .row
+            .col-sm-4
+                h2 About me
+                p You are logged in as #{role_name}
+                p Email is #{email}
+                p You registered at #{createAt}
+                form(action="/logout" method="post")#logout-form
+                    a(href="javascript:void(0)")(onclick="document.getElementById('logout-form').submit();") Log out
+            .col-sm-8
+                block dashboard
+
+
+    style.
+        body {
+            padding: 0 !important;
+        }

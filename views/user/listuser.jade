@@ -1,0 +1,32 @@
+extends dashboard
+
+block dashboard
+    h2 User Information
+    table.table.table-striped.user-table
+        thead
+            tr
+                th(scope="col") #
+                th(scope="col") Username
+                th(scope="col") Email
+                th(scope="col") Role
+                th(scope="col") CreateAt
+                th(scope="col") Edit
+                th(scope="col") Remove
+        tbody
+            each user, index in users
+                tr
+                    th(scope="row") #{index}
+                    th(scope="row") #{user.username}
+                    th(scope="row") #{user.email}
+                    th(scope="row") #{user.role_id.name}
+                    th(scope="row") #{user.createAt}
+                    th(scope="row")
+                        a(href="/user/#{user._id}") Edit
+                    th(scope="row")
+                        a(href="/user/remove/#{user._id}") Remove
+
+
+    style.
+        .user-table {
+           font-size: 12px;
+         }

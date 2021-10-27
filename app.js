@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const logger = require('morgan');
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 const app = express();
 
 // view engine setup
@@ -28,9 +27,8 @@ app.use(session({
     maxAge : 24 * 60 * 60 * 1000
   }
 }));
-app.use('/', indexRouter);
-app.use('/users', usersRouter, function(req, res) {
-  res.sendStatus(404, 'application/json', '{"error":"resource not found"}');
+app.use('/', indexRouter, function(req, res) {
+  res.sendStatus(404, 'application/json', '{"error": "Not found something"}')
 });
 
 app.use((err, req, res, next) => {
