@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const logger = require('morgan');
 const indexRouter = require('./routes/index');
+const userRouter = require('./routes/users');
 const app = express();
 
 // view engine setup
@@ -27,16 +28,8 @@ app.use(session({
     maxAge : 24 * 60 * 60 * 1000
   }
 }));
-app.use('/', indexRouter, function(req, res) {
-  res.sendStatus(404, 'application/json', '{"error": "Not found something"}')
-});
-
-app.use((err, req, res, next) => {
-  const error = new Error("Not found");
-  error.status = 404;
-  next(error);
-});
-
+app.use('/', indexRouter);
+app.use('/user', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

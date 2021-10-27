@@ -9,6 +9,13 @@ const userModel = {
             throw e;
         }
     },
+    getOne : async (obj) => {
+        try {
+            return await userSchema.findOne(obj).populate('role_id').exec();
+        } catch (e) {
+            throw e;
+        }
+    },
     register : async (obj) => {
         const role = await roleSchema.find().exec();
         const user = new userSchema({...obj, role_id : role[1]._id});
@@ -18,14 +25,32 @@ const userModel = {
             return e;
         }
     },
-    update : async (filter, update) => {
+    update : async (finder, update) => {
         try {
-            await userSchema.updateOne(filter, update);
+            const textpw = update.password;
+            if (textpw) {
+                const newpw = await userSchema.hashpw(textpw)
+                update.password = newpw.newpw;
+                update.salt = newpw.salt;
+            }
+
+            if (update.role_id) {
+                const role = await roleSchema.findOne({role : update.role_id}).exec();
+                update.role_id = role._id;
+            }
+
+            await userSchema.findOneAndUpdate(finder, update);
         } catch (e) {
             throw e;
         }
     },
-
+    remove : async (finder) => {
+        try {
+            await userSchema.findOneAndDelete(finder);
+        } catch (e) {
+            throw e;
+        }
+    },
     compareHashpw : async (pass, hashed) => {
         try {
             return await userSchema.comparepw(pass, hashed);

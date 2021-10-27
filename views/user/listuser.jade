@@ -9,7 +9,7 @@ block dashboard
                 th(scope="col") Username
                 th(scope="col") Email
                 th(scope="col") Role
-                th(scope="col") CreateAt
+                th(scope="col") UpdateAt
                 th(scope="col") Edit
                 th(scope="col") Remove
         tbody
@@ -19,14 +19,28 @@ block dashboard
                     th(scope="row") #{user.username}
                     th(scope="row") #{user.email}
                     th(scope="row") #{user.role_id.name}
-                    th(scope="row") #{user.createAt}
+                    th(scope="row") #{user.updateAt}
                     th(scope="row")
                         a(href="/user/#{user._id}") Edit
                     th(scope="row")
-                        a(href="/user/remove/#{user._id}") Remove
+                        form(method="POST" id="removeUser#{user._id}" action="/user/remove")
+                            input(type="hidden", name="_id", value="#{user._id}")
+                            a.removeUser(href="javascript:void" id="removeUser#{user._id}") Remove
 
 
     style.
         .user-table {
            font-size: 12px;
          }
+    script.
+        const arr = document.getElementsByClassName('removeUser');
+        for(let i = 0 ; i < arr.length; i++) {
+            let id = arr[i].getAttribute('id')
+            arr[i].addEventListener('click', function (e) {
+                e.preventDefault();
+                const r = confirm('Are you sure?');
+                if (r) {
+                    document.getElementById(id).submit();
+                }
+            });
+        }

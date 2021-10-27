@@ -1,0 +1,57 @@
+extends ../layout
+block content
+    h1 Edit user
+    form(method="POST" id="removeUserForm" action="/user/remove")
+        input(type="hidden", name="_id", value="#{user._id}")
+        a.alert-danger.removeUserLink(href="javascript:void") Remove user
+    form(method="POST" action="/user")
+        input(type="hidden", name="_id", value="#{user._id}")
+        p
+        label(class="form-label") Username
+        input(name="username", class="form-control", disabled="disabled", value="#{user.username}")
+        p
+        label(class="form-label") Password
+        input(name="password", type="password", class="form-control", value="")
+        p
+        label(class="form-label") Email
+        input(name="email", type="text", class="form-control", value="#{user.email}")
+        p
+        label(class="form-label") Role
+        select(name="role", id="role")
+            each value, index in {admin:'Administrator', guest: 'Guest'}
+                if (index === user.role_id.role)
+                    option(value="#{index}", selected="selected") #{value}
+                else
+                    option(value="#{index}") #{value}
+        p
+        input(value="Edit", type="submit", class="btn btn-primary")
+        a(href="/user/list") Cancel
+
+        style.
+            select {
+                position: relative;
+                display: inherit;
+                min-width: 170px;
+                padding: 6px 12px;
+                margin: 0 0 30px;
+                font-size: 14px;
+                text-align: left;
+                list-style: none;
+                background-color: #fff;
+                background-clip: padding-box;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            select:focus {
+                border-color: #66afe9;
+                outline: 0;
+            }
+        script.
+            document.getElementsByClassName('removeUserLink').addEventListener('click', function (e) {
+                e.preventDefault();
+                const r = confirm('Are you sure?');
+                if (r) {
+                    document.getElementById("removeUserForm").submit();
+                }
+            });

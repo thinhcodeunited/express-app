@@ -41,9 +41,16 @@ UserSchema.path('username').validate(async function (username, cb) {
     return (typeof finded !== 'undefined' && finded.length === 0);
 }, 'User exists!');
 
+UserSchema.pre('find', async function(next) {
+    const user = this;
+    user.updateAt = Date.now();
+    next();
+});
+
 UserSchema.pre('save', async function(next) {
     const user = this;
-
+    // update timeat if it has modified
+    user.updateAt = Date.now();
     // only hash the password if it has been modified (or is new)
     if (!user.isModified('password')) return next();
 
@@ -53,8 +60,6 @@ UserSchema.pre('save', async function(next) {
         user.password = newpw;
         user.salt = salt;
         next();
-        // update timeat if it has modified
-        user.updateAt = Date.now();
     } catch (e) {
         return next(e);
     }
