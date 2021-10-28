@@ -1,4 +1,4 @@
-extends ../layout
+extends layout
 block content
     .bg-primary.text-white.text-center
         h1 Hello #{username}
@@ -9,6 +9,7 @@ block content
                 p You are logged in as #{role_name}
                 p Email is #{email}
                 p You registered at #{createAt}
+                p Time now is #{dateNow}
                 form(action="/logout" method="post")#logout-form
                     a(href="javascript:void(0)")(onclick="document.getElementById('logout-form').submit();") Log out
             .col-sm-8
@@ -18,4 +19,24 @@ block content
     style.
         body {
             padding: 0 !important;
+        }
+
+        select {
+            position: relative;
+            display: inherit;
+            min-width: 170px;
+            padding: 6px 12px;
+            margin: 0 0 30px;
+            font-size: 14px;
+            text-align: left;
+            list-style: none;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        select:focus {
+            border-color: #66afe9;
+            outline: 0;
         }

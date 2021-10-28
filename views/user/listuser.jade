@@ -1,7 +1,8 @@
-extends dashboard
+extends ../dashboard
 
 block dashboard
     h2 User Information
+    a(href="/user") Back
     table.table.table-striped.user-table
         thead
             tr
@@ -19,7 +20,7 @@ block dashboard
                     th(scope="row") #{user.username}
                     th(scope="row") #{user.email}
                     th(scope="row") #{user.role_id.name}
-                    th(scope="row") #{user.updateAt}
+                    th(scope="row") #{new Date(user.updateAt).toLocaleString('Vi')}
                     th(scope="row")
                         a(href="/user/#{user._id}") Edit
                     th(scope="row")

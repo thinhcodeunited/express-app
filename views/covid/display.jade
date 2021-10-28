@@ -1,0 +1,39 @@
+extends ../dashboard
+
+block dashboard
+    h2 Covid today
+    p
+        a(href="/user") Back
+    form(action="/weather" method="GET" id="weather-form")
+        table.table.table-striped.user-table
+            thead
+                tr
+                    th(scope="col") Tỉnh/Thành phố
+                    th(scope="col") Tổng số ca
+                    th(scope="col") Hôm nay
+                    th(scope="col") Tử vong
+                    th(scope="col") Phục hồi
+            thead
+                tr.alert-danger
+                    th(scope="col") Tổng cộng
+                    th(scope="col") #{covidTotal.cases}
+                    th(scope="col") #
+                    th(scope="col") #{covidTotal.death}
+                    th(scope="col") #{covidTotal.recovered}
+            thead
+                tr.alert-danger
+                    th(scope="col") Hôm nay
+                    th(scope="col") #{covidToday.cases}
+                    th(scope="col") #
+                    th(scope="col") #{covidToday.death}
+                    th(scope="col") #{covidToday.recovered}
+            tbody
+                each i in covidLocations
+                    tr
+                        th(scope="row") #{i.name}
+                        th(scope="row") #{i.cases}
+                        th(scope="row") #{i.casesToday}
+                        th(scope="row") #{i.death}
+                        th(scope="row") #{i.recovered}
+
+    a(href="/user") Back

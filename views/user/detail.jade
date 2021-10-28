@@ -27,26 +27,6 @@ block content
         input(value="Edit", type="submit", class="btn btn-primary")
         a(href="/user/list") Cancel
 
-        style.
-            select {
-                position: relative;
-                display: inherit;
-                min-width: 170px;
-                padding: 6px 12px;
-                margin: 0 0 30px;
-                font-size: 14px;
-                text-align: left;
-                list-style: none;
-                background-color: #fff;
-                background-clip: padding-box;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-            }
-
-            select:focus {
-                border-color: #66afe9;
-                outline: 0;
-            }
         script.
             document.getElementsByClassName('removeUserLink').addEventListener('click', function (e) {
                 e.preventDefault();

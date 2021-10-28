@@ -1,4 +1,4 @@
-extends dashboard
+extends ../dashboard
 
 block dashboard
     h2 Dashboard
@@ -9,6 +9,8 @@ block dashboard
                     a.nav-link(href="/user/list") Manage Users
             li.nav-item
                 a.nav-link(href="/post/list") Manage Posts
-            if capability.manage_user
-                li.nav-item
-                    a.nav-link(href="#") Something 3
+
+            li.nav-item
+                a.nav-link(href="/weather") Weather
+            li.nav-item
+                a.nav-link(href="/covid") Covid

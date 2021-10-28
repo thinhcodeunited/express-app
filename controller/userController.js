@@ -1,5 +1,6 @@
 const userModel = require('../model/userModel');
 const {get_capability} = require('../utils/capability');
+const {getsessiondata} = require('../utils/getsessiondata');
 
 module.exports.register = async (req, res) => {
     const userinfo = {
@@ -37,18 +38,11 @@ module.exports.login = async (req, res) => {
 
 module.exports.userinfo = (req, res) => {
     const session = req.session.Userinfo;
-    const obj = {
+    let obj = {
         title : 'User Info',
-        username : session.user.username,
-        email : session.user.email,
-        role_name : session.user.role_id.name,
-        capability : {
-            manage_user: session.manage_user,
-            manage_post: session.manage_post,
-        },
-        createAt : new Date(session.user.createAt),
         datenow : new Date()
     }
+    obj = getsessiondata(req, obj);
     res.render('user/userinfo', obj);
 }
 
@@ -60,19 +54,11 @@ module.exports.logout = (req, res) => {
 
 module.exports.listUsers = async (req, res) => {
     const users = await userModel.get({});
-    const session = req.session.Userinfo;
-    const obj = {
+    let obj = {
         title : 'Manage Users',
-        username : session.user.username,
-        email : session.user.email,
-        role_name : session.user.role_id.name,
-        capability : {
-            manage_user: session.manage_user,
-            manage_post: session.manage_post,
-        },
-        createAt : new Date(session.user.createAt),
         users : users
     }
+    obj = getsessiondata(req, obj);
     res.render('user/listuser', obj);
 }
 

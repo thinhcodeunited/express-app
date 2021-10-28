@@ -1,0 +1,46 @@
+extends ../dashboard
+
+block dashboard
+    h2 Weather monitor
+    p
+        a(href="/user") Back
+    form(action="/weather" method="GET" id="weather-form")
+        label(for="city") Select city
+            select(name="city" id="city")
+                each i in city
+                    if (city_checked && city_checked == i.id)
+                        option(value="#{i.id}" selected="selected") #{i.name}
+                    else
+                        option(value="#{i.id}") #{i.name}
+
+        table.table.table-striped.user-table
+            thead
+                tr
+                    th(scope="col") Thời tiết
+                    th(scope="col") Nhiệt độ
+                    th(scope="col") Độ ẩm
+                    th(scope="col") Tốc độ gió
+                    th(scope="col") Có mây
+                    th(scope="col") Mưa
+                    th(scope="col") Tầm nhìn xa
+                    th(scope="col") Mặt trời mọc
+                    th(scope="col") Mặt trời lặn
+            tbody
+                if (!weatherData)
+                    tr
+                        td.text-center(scope="row" colspan="9") No data found!
+                else
+                    tr
+                        th(scope="row") #{weatherData.description}
+                        th(scope="row") #{weatherData.temp}
+                        th(scope="row") #{weatherData.humidity}
+                        th(scope="row") #{weatherData.wind_speed}
+                        th(scope="row") #{weatherData.clouds}
+                        th(scope="row") #{weatherData.rain}
+                        th(scope="row") #{weatherData.visibility}
+                        th(scope="row") #{weatherData.sunrise}
+                        th(scope="row") #{weatherData.sunset}
+    script.
+        document.getElementById('city').addEventListener('change', (e) => {
+           document.getElementById('weather-form').submit();
+        });

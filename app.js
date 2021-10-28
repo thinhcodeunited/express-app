@@ -6,6 +6,8 @@ const session = require('express-session');
 const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/users');
+const weatherRouter = require('./routes/weather');
+const covidRouter = require('./routes/covid');
 const app = express();
 
 // view engine setup
@@ -30,7 +32,8 @@ app.use(session({
 }));
 app.use('/', indexRouter);
 app.use('/user', userRouter);
-
+app.use('/weather', weatherRouter);
+app.use('/covid', covidRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
