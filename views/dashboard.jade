@@ -10,8 +10,13 @@ block content
                 p Email is #{email}
                 p You registered at #{createAt}
                 p Time now is #{dateNow}
+                script.
+                    if (window.location.pathname !== '/user') {
+                        document.write('<p><a class="btn btn-primary" href="/user">Back</p>')
+                    }
                 form(action="/logout" method="post")#logout-form
-                    a(href="javascript:void(0)")(onclick="document.getElementById('logout-form').submit();") Log out
+                    a.btn.btn-warning(href="javascript:void(0)")(onclick="document.getElementById('logout-form').submit();") Log out
+
             .col-sm-8
                 block dashboard
 

@@ -6,6 +6,7 @@ const session = require('express-session');
 const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/users');
+const postRouter = require('./routes/post');
 const weatherRouter = require('./routes/weather');
 const covidRouter = require('./routes/covid');
 const app = express();
@@ -32,6 +33,7 @@ app.use(session({
 }));
 app.use('/', indexRouter);
 app.use('/user', userRouter);
+app.use('/post', postRouter);
 app.use('/weather', weatherRouter);
 app.use('/covid', covidRouter);
 // catch 404 and forward to error handler

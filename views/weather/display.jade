@@ -2,8 +2,6 @@ extends ../dashboard
 
 block dashboard
     h2 Weather monitor
-    p
-        a(href="/user") Back
     form(action="/weather" method="GET" id="weather-form")
         label(for="city") Select city
             select(name="city" id="city")

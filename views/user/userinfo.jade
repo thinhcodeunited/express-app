@@ -2,13 +2,13 @@ extends ../dashboard
 
 block dashboard
     h2 Dashboard
-    p Now time is #{datenow}
+    p You can manage the following
         ul.nav.nav-pills.flex-column
             if capability.manage_user
                 li.nav-item
                     a.nav-link(href="/user/list") Manage Users
             li.nav-item
-                a.nav-link(href="/post/list") Manage Posts
+                a.nav-link(href="/post") Manage Posts
 
             li.nav-item
                 a.nav-link(href="/weather") Weather
