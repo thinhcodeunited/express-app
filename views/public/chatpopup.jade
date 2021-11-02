@@ -1,0 +1,18 @@
+.chat-area
+    button.open-button(onclick="openForm()") 
+        i.fas.fa-comments
+    .chat-popup#myForm     
+        form(action="" class="form-container")
+            h3 Hi #{username}, chat with us
+            label(for="msg")
+                b Message 
+            ul.msg
+            input.msg-input(name="msg-input" placeholder="Type message...")
+            button.btn.msg-send(type="button" disabled="disabled") Send
+            button.btn.cancel(type="button" onclick="closeForm()") Close
+    script.     
+        var obj = {
+            username : `#{username}`,
+            email : `#{email}`,
+            role_name : `#{role_name}`
+        }

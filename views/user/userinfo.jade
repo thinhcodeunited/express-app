@@ -4,6 +4,8 @@ block dashboard
     h2 Dashboard
     p You can manage the following
         ul.nav.nav-pills.flex-column
+            li.nav-item
+                a.nav-link(href="/user/chat") Manage Chat
             if capability.manage_user
                 li.nav-item
                     a.nav-link(href="/user/list") Manage Users

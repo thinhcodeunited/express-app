@@ -1,0 +1,73 @@
+extends ../layout
+block content
+    h1 Create post
+    .container.mt-5
+    script.
+       
+    form(method="POST" action="/post/#{type}" enctype="multipart/form-data")
+        .row
+            .col-sm-8
+                label(class="form-label") Title
+                input(name="title" class="form-control" value="#{post.title}" placeholder="Enter your title")
+                p
+                label(class="form-label") Content
+                textarea.form-control#js-tinymce-app(name="content", cols="30", rows="10") #{post.content}
+            .col-sm-4
+                label(class="form-label") Post status
+                select(name="poststatus", id="post-status")
+                    each value, index in {published:'Publish', unpublished: 'Unpublish'}
+                        if (index === post.status)
+                            option(value="#{index}", selected="selected") #{value}
+                        else
+                            option(value="#{index}") #{value}
+                p
+                label(class="form-label") Feature image
+                input(name="featureimage", id="imgInp", type="file", class="form-control", value="#{post.feature_image}")
+                span.preview 
+                    if (post.feature_image)
+                        img(width="100px" height="100px" id="imgPreview" src="#{post.feature_image}" alt="preview image")
+                p
+                label(class="form-label") Slug
+                input(name="slug", type="text", class="form-control", value="#{post.slug}" placeholder="/post-1/123")
+                p
+                br
+                input(value="Create", type="submit", class="btn btn-primary")
+                = " "
+                a.btn.btn-default(href="/post") Cancel
+        
+        script.
+            imgInp.onchange = evt => {
+                $("span.preview #imgPreview").remove();
+                $("span.preview").append('<img width="100px" height="100px" id="imgPreview" src="#" alt="preview image" />');
+                const [file] = imgInp.files
+                if (file) {
+                    imgPreview.src = URL.createObjectURL(file)
+                }
+            }
+        style.
+            body {
+                padding : 10px 50px;
+            }
+            select {
+                position: relative;
+                display: inherit;
+                width: 100%;
+                padding: 6px 12px;
+                margin: 0 0 30px;
+                font-size: 14px;
+                text-align: left;
+                list-style: none;
+                background-color: #fff;
+                background-clip: padding-box;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            select:focus {
+                border-color: #66afe9;
+                outline: 0;
+            }
+
+            img#imgPreview {
+                margin-top : 10px
+            }

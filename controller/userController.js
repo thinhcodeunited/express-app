@@ -101,3 +101,11 @@ module.exports.removeUser = async (req, res) => {
         res.sendStatus(500, 'application/json', 'Error');
     }
 }
+
+module.exports.manageChat = (req, res) => {
+    let obj = {
+        title : 'Manage Chat'
+    }
+    obj = getsessiondata(req, obj);
+    res.render('user/managechat', obj);
+}

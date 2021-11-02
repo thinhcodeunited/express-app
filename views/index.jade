@@ -8,10 +8,12 @@ block content
       .container-fluid
         .nav-collapse
         ul.nav
-         li.active(onclick="move('login')")
-          a(href="javascript:void(0)") Login
-         li(onclick="move('register')")
-          a(href="javascript:void(0)") Register
+          li.active(onclick="move('public')")
+            a(href="javascript:void(0)") Public
+          li.active(onclick="move('login')")
+            a(href="javascript:void(0)") Login
+          li(onclick="move('register')")
+            a(href="javascript:void(0)") Register
         script.
             function move(goto) {
                 window.location.href=goto;

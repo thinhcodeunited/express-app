@@ -9,6 +9,7 @@ const userRouter = require('./routes/users');
 const postRouter = require('./routes/post');
 const weatherRouter = require('./routes/weather');
 const covidRouter = require('./routes/covid');
+const frontRouter = require('./routes/public/front');
 const app = express();
 
 // view engine setup
@@ -21,6 +22,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bootstrap-css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+app.use('/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist/')));
 
 // Use the session middleware
 app.use(session({
@@ -36,6 +39,11 @@ app.use('/user', userRouter);
 app.use('/post', postRouter);
 app.use('/weather', weatherRouter);
 app.use('/covid', covidRouter);
+app.use('/public', frontRouter);
+
+app.use('/dangnhap', (req, res) => {
+  check 
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

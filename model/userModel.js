@@ -18,9 +18,18 @@ const userModel = {
     },
     register : async (obj) => {
         const role = await roleSchema.find().exec();
-        const user = new userSchema({...obj, role_id : role[1]._id});
+     
+        if (obj.length) {
+            obj.map(element => {
+                element.role_id = role[1]._id;
+                return element;
+            });
+        } else {
+            obj = {...obj, role_id : role[1]._id};
+        }
+      
         try {
-            return await user.save();
+            return await userSchema.create(obj);
         } catch (e) {
             return e;
         }

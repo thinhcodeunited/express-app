@@ -1,0 +1,36 @@
+extends ../dashboard
+
+block dashboard
+    h2 Manage chat
+    .userarea
+        label User online
+        ul#user
+    .chatarea 
+        ul#messages
+        form#form(action="")
+           input#input.msg-input(autocomplete="off")
+           button.msg-send Send #{userdata}
+    .clear-both
+    script.     
+        var obj = {
+            username : `#{username}`,
+            email : `#{email}`,
+            role_name : `#{role_name}`
+        }
+    script(src="/socket.io/socket.io.js")
+    script(type="application/javascript" src="/javascripts/admin-chat-script.js")
+    style.
+        .clear-both : {clear : both;}
+        .userarea { width : 30%;border-right:2px solid; margin-right : 10px;min-height: 200px}
+        .chatarea {width: calc(100% - (10px + 30%));}
+        .userarea label {font-size : 20px; font-weight : 500}
+        .userarea ul {list-style:circle;color: green; font-size : 16px}
+        .userarea, .chatarea {float:left;}
+        #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
+        #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
+        #input:focus { outline: none; }
+        #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
+        #messages { list-style-type: none; margin: 0; padding: 0;max-height : 200px;min-height : 200px;overflow : auto;margin-bottom : 10px }
+        #messages > li { padding: 0.5rem 1rem; }
+        #messages > li:nth-child(odd) { background: #efefef; }
+   

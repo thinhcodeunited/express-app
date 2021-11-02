@@ -1,0 +1,110 @@
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+.fa-comments {
+  font-size: 25px;
+}
+
+.chat-area h3 {
+  overflow: hidden;
+}
+/* Button used to open the chat form - fixed at the bottom of the page */
+.chat-area .open-button {
+  background-color: #519963;
+  color: white;
+  padding: 25px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  border-radius: 50%;
+}
+
+/* The popup chat - hidden by default */
+.chat-area .chat-popup {
+  display: none;
+  position: fixed;
+  bottom: 5px;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.chat-area .form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width textarea */
+.chat-area .form-container .msg {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  resize: none;
+  max-height: 200px;
+  min-height: 200px;
+  overflow: auto;
+}
+
+.chat-area .form-container .msg li {
+  list-style: none;
+  margin: 5px 0;
+}
+
+.chat-area .form-container .msg li.server-notification {
+  text-align: center;
+  color: #f00;
+}
+
+.chat-area .form-container .msg li b {
+  text-transform: capitalize;
+}
+
+.chat-area .form-container .msg li span {
+  border : 1px solid;
+  padding: 2px 5px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+/* Set a style for the submit/send button */
+.chat-area .form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+.chat-area .msg-input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  resize: none;
+}
+
+/* When the textarea gets focus, do something */
+.chat-area .form-container .msg-input:focus {
+  background-color: #f1f1f1;
+  outline: none;
+}
+
+/* Add a red background color to the cancel button */
+.chat-area .form-container .cancel {
+  background-color: rgb(196, 196, 196);
+}
+
+/* Add some hover effects to buttons */
+.chat-area .form-container .btn:hover, .chat-area .open-button:hover {
+  opacity: 1;
+}

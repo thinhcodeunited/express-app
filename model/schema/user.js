@@ -41,6 +41,11 @@ UserSchema.path('username').validate(async function (username, cb) {
     return (typeof finded !== 'undefined' && finded.length === 0);
 }, 'User exists!');
 
+UserSchema.path('email').validate(async function (username, cb) {
+    const finded = await userModel.find({email : email}).exec();
+    return (typeof finded !== 'undefined' && finded.length === 0);
+}, 'Email exists!');
+
 UserSchema.pre('find', async function(next) {
     const user = this;
     user.updateAt = Date.now();

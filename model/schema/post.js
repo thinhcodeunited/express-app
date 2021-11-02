@@ -34,4 +34,18 @@ const postSchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Post', postSchema);
+postSchema.path('title').validate(async function(title) {
+    const finded = await postModel.find({title : title});
+    return (typeof finded !== 'undefined' && finded.length === 0);
+}, 'Post is exist!');
+
+postSchema.pre('save', function(next) {
+    const post = this;
+    // update timeat if it has modified
+    post.updated_at = Date.now().toLocaleString();
+    next();
+});
+
+const postModel = mongoose.model('Post', postSchema);
+
+module.exports = postModel;

@@ -2,12 +2,19 @@ extends ../dashboard
 block dashboard
     h2 Manage posts
     p
-
         form(action="/post/sync" method="POST")
-            a.btn.btn-default.btn-group.btn-primary(href="/post/new") Add new
+            a.btn.btn-default.btn-group.btn-primary(href="/post/new") New post
             = ' '
-            input.btn.btn-default.btn-group.btn-info(type="submit" value="Sync from Ghost")
+            if capability.manage_post.create_post
+                input.btn.btn-default.btn-group.btn-info(type="submit" value="Crawl from Ghost")
 
     .list-group
         each v in posts
-            a.list-group-item.list-group-item-action(href="#") #{v.name}
+            a.list-group-item.list-group-item-action(href="/post/#{v._id}") 
+                span.badge(style="float:right;position:absolute;right: 10px;bottom: 30px;") #{v.status}
+                h4 #{v.title}
+                p(style="margin:0") Created 
+                    span(style="font-weight: bold") #{v.timeago} 
+                    = " by "
+                    label #{v.author.username} 
+                    
